@@ -75,10 +75,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\ColisaoControll.cs" />
     <Compile Include="Assets\Scripts\ControllSemaforos.cs" />
     <Compile Include="Assets\Scripts\MenuController.cs" />
     <Compile Include="Assets\Scripts\MovePlayerCar.cs" />
-    <Compile Include="Assets\Scripts\RotatePontes.cs" />
+    <Compile Include="Assets\Scripts\MultasControll.cs" />
     <Compile Include="Assets\Sports Car Multiple textures\Scripts\DemoManager.cs" />
     <Compile Include="Assets\Sports Car Multiple textures\Scripts\MouseOrbit.cs" />
     <Compile Include="Assets\Sports Car Multiple textures\Standard Assets\Environment\Water\Water\Scripts\Displace.cs" />

@@ -17,6 +17,12 @@ public class MenuController : MonoBehaviour {
     private GameObject telaJogo;
     [SerializeField]
     private GameObject telaAjuda;
+    [SerializeField]
+    private GameObject telaMulta;
+    [SerializeField]
+    private GameObject telaShowMulta;
+    [SerializeField]
+    private GameObject telaGameOver;
 
     private static bool pausado = false;
 
@@ -29,7 +35,10 @@ public class MenuController : MonoBehaviour {
     void Start () {
         telaPause.SetActive(false);
         telaAjuda.SetActive(false);
+        telaShowMulta.SetActive(false);
+        telaGameOver.SetActive(false);
         telaJogo.SetActive(true);
+        telaMulta.SetActive(true);
     }
 	
 	// Update is called once per frame
@@ -50,6 +59,15 @@ public class MenuController : MonoBehaviour {
         {
             PausaJogo();
         }
+
+        //gameover
+        if (MultasControll.total_pontos >= 20)
+        {
+            pausado = true;
+            Time.timeScale = 0f;
+            telaShowMulta.SetActive(false);
+            telaGameOver.SetActive(true);
+        }
     }
 
     public void PausaJogo ()
@@ -60,7 +78,10 @@ public class MenuController : MonoBehaviour {
             pausado = true;
             telaJogo.SetActive(false);
             telaAjuda.SetActive(false);
+            telaShowMulta.SetActive(false);
+            telaGameOver.SetActive(false);
             telaPause.SetActive(true);
+            telaMulta.SetActive(true);
         }
         else
         {
@@ -68,7 +89,10 @@ public class MenuController : MonoBehaviour {
             pausado = false;
             telaPause.SetActive(false);
             telaAjuda.SetActive(false);
+            telaShowMulta.SetActive(false);
+            telaGameOver.SetActive(false);
             telaJogo.SetActive(true);
+            telaMulta.SetActive(true);
         }
     }
 
@@ -76,6 +100,7 @@ public class MenuController : MonoBehaviour {
     {
         telaPause.SetActive(false);
         telaJogo.SetActive(false);
+        telaMulta.SetActive(false);
         telaAjuda.SetActive(true);
     }
 
@@ -83,16 +108,21 @@ public class MenuController : MonoBehaviour {
     {
         telaAjuda.SetActive(false);
         telaJogo.SetActive(false);
+        telaMulta.SetActive(true);
         telaPause.SetActive(true);
     }
 
     public void ResetPosicao ()
     {
+        //reseta o jogo
         carro.transform.position = posInicial.transform.position;
         carro.transform.rotation = posInicial.transform.rotation;
-        RotatePontes.estado = 0;
+        ColisaoControll.estado = 0;
         MovePlayerCar.velocidadeRe = 0f;
         MovePlayerCar.velocidadeFrente = 1f;
+        //zera as multas
+        MultasControll.ResetMultas();
+        //tira o jogo do pause
         PausaJogo();
     }
 }

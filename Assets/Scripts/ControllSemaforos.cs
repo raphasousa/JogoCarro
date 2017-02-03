@@ -44,28 +44,32 @@ public class ControllSemaforos : MonoBehaviour {
             {
                 if (IsRed("Baixo"))
                 {
-                    Debug.Log("Passou no vermelho em baixo");
+                    //Debug.Log("Passou no vermelho em baixo");
+                    MultasControll.AplicaMulta("Passar no semaforo vermelho");
                 }
             }
             else if (col.transform.name == "Quad_Cima")
             {
                 if (IsRed("CimaLado"))
                 {
-                    Debug.Log("Passou no vermelho em cima");
+                    //Debug.Log("Passou no vermelho em cima");
+                    MultasControll.AplicaMulta("Passar no semaforo vermelho");
                 }
             }
             else if (col.transform.name == "Quad_Direita")
             {
                 if (IsRed("Direita"))
                 {
-                    Debug.Log("Passou no vermelho em direita");
+                    //Debug.Log("Passou no vermelho em direita");
+                    MultasControll.AplicaMulta("Passar no semaforo vermelho");
                 }
             }
             else if (col.transform.name == "Quad_Esquerda")
             {
                 if (IsRed("Esquerda"))
                 {
-                    Debug.Log("Passou no vermelho em esquerda");
+                    //Debug.Log("Passou no vermelho em esquerda");
+                    MultasControll.AplicaMulta("Passar no semaforo vermelho");
                 }
             }
         }
