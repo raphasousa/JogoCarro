@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(AudioSource))]
+
 public class MultasControll : MonoBehaviour {
 
     //textos dos tipos de multas na tela de multas
@@ -49,9 +51,16 @@ public class MultasControll : MonoBehaviour {
     private static string motivo_multa;
     private static int tipo_multa;
 
+    //som de mensagen
+    private AudioSource som;
+    public AudioClip audio_mensagem;
+
     // Use this for initialization
     void Start () {
         ResetMultas();
+
+        //procura o componente de audio
+        som = GetComponent<AudioSource>();
     }
 	
 	// Update is called once per frame
@@ -163,8 +172,16 @@ public class MultasControll : MonoBehaviour {
 
     IEnumerator ShowTelaMulta ()
     {
+        TocaSom(audio_mensagem);
         telaShowMulta.SetActive(true);
         yield return new WaitForSeconds(3f);
         telaShowMulta.SetActive(false);
+    }
+
+    void TocaSom(AudioClip audio)
+    {
+        som.Stop();
+        som.clip = audio;
+        som.Play();
     }
 }
