@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityStandardAssets.Vehicles.Car;
 
 public class MenuController : MonoBehaviour {
 
     [SerializeField]
     private GameObject posInicial;
-    [SerializeField]
-    private GameObject carro;
     [SerializeField]
     private Text TextVelocidade;
     [SerializeField]
@@ -23,12 +22,22 @@ public class MenuController : MonoBehaviour {
     private GameObject telaShowMulta;
     [SerializeField]
     private GameObject telaGameOver;
+    [SerializeField]
+    private GameObject Carro;
 
     private static bool pausado = false;
+    private static float velocidadeCarro = 0f;
+
+    private CarController m_Car; // the car controller we want to use
 
     public static bool getPausado()
     {
         return pausado;
+    }
+
+    public static float getVelocidade()
+    {
+        return velocidadeCarro;
     }
 
     // Use this for initialization
@@ -39,19 +48,19 @@ public class MenuController : MonoBehaviour {
         telaGameOver.SetActive(false);
         telaJogo.SetActive(true);
         telaMulta.SetActive(true);
+
+        // get the car controller
+        m_Car = Carro.GetComponent<CarController>();
     }
 	
 	// Update is called once per frame
 	void Update () {
+        velocidadeCarro = m_Car.CurrentSpeed * 1.15f;
+
+        //atualiza velocidade
         if (getPausado() == false)
         {
-            //velocimetro frente
-            if (MovePlayerCar.velocidadeFrente > 0f && MovePlayerCar.velocidadeRe == 0f)
-                TextVelocidade.text = "Speed: " + Mathf.FloorToInt(MovePlayerCar.velocidadeFrente) + " km/h";
-
-            //velocimetro ré
-            if (MovePlayerCar.velocidadeRe > 0f && MovePlayerCar.velocidadeFrente == 0f)
-                TextVelocidade.text = "Speed: " + Mathf.FloorToInt(MovePlayerCar.velocidadeRe) + " km/h";
+            TextVelocidade.text = "Speed: " + Mathf.FloorToInt(velocidadeCarro) + " km/h";
         }
 
         //pause
@@ -73,7 +82,7 @@ public class MenuController : MonoBehaviour {
     public void PausaJogo ()
     {
         if (getPausado() == false)
-        {
+        {   //pausa o jogo
             Time.timeScale = 0f;
             pausado = true;
             telaJogo.SetActive(false);
@@ -84,7 +93,7 @@ public class MenuController : MonoBehaviour {
             telaMulta.SetActive(true);
         }
         else
-        {
+        {   //tira do pause
             Time.timeScale = 1f;
             pausado = false;
             telaPause.SetActive(false);
@@ -114,12 +123,11 @@ public class MenuController : MonoBehaviour {
 
     public void ResetPosicao ()
     {
-        //reseta o jogo
-        carro.transform.position = posInicial.transform.position;
-        carro.transform.rotation = posInicial.transform.rotation;
-        ColisaoControll.estado = 0;
-        MovePlayerCar.velocidadeRe = 0f;
-        MovePlayerCar.velocidadeFrente = 1f;
+        //reseta posição do carro
+        Carro.transform.position = posInicial.transform.position;
+        Carro.transform.rotation = posInicial.transform.rotation;
+        //zera a velocidade
+        m_Car.SetCurrentSpeedToZero = 0f;
         //zera as multas
         MultasControll.ResetMultas();
         //tira o jogo do pause
